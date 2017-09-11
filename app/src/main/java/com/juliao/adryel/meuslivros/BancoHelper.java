@@ -141,6 +141,37 @@ public class BancoHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Livro findById(String tiulo) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Log.i(TAG, "Buscou carro com id = "+ tiulo);
+
+        try {
+            // select * from carro
+            String selection = LivroContrato.LivroEntry.TITULO + "= ?";
+            String[] whereArgs = new String[]{tiulo};
+            Cursor c = db.query(LivroContrato.LivroEntry.TABLE_NAME, null, selection, whereArgs, null, null, null, null);
+
+            if (c.moveToFirst()){
+                Livro l = new Livro();
+
+                // recupera os atributos de carro
+                l.setId(c.getInt(c.getColumnIndex(LivroContrato.LivroEntry._ID)));
+                l.setTitulo(c.getString(c.getColumnIndex(LivroContrato.LivroEntry.TITULO)));
+                l.setAutor(c.getString(c.getColumnIndex(LivroContrato.LivroEntry.AUTOR)));
+                l.setAno(c.getInt(c.getColumnIndex(LivroContrato.LivroEntry.ANO)));
+                l.setNota(c.getFloat(c.getColumnIndex(LivroContrato.LivroEntry.NOTA)));
+
+                return l;
+            }else {
+                return null;
+            }
+        } finally {
+            db.close();
+        }
+    }
+
+
     // Lê o cursor e cria a lista de livros
     private List<Livro> toList(Cursor c) {
 

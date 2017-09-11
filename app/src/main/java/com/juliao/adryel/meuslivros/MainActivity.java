@@ -55,4 +55,9 @@ public class MainActivity extends AppCompatActivity {
         snack.show();
     }
 
+    public void busca(View v){
+        Intent i = new Intent(MainActivity.this, Pesquisar.class);
+        startActivity(i);
+    }
+
 }
