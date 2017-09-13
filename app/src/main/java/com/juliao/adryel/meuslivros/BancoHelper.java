@@ -141,13 +141,13 @@ public class BancoHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Livro findById(String tiulo) {
+    public Livro findByTitulo(String tiulo) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Log.i(TAG, "Buscou carro com id = "+ tiulo);
+        Log.i(TAG, "Buscou titulo com id = "+ tiulo);
 
         try {
-            // select * from carro
+
             String selection = LivroContrato.LivroEntry.TITULO + "= ?";
             String[] whereArgs = new String[]{tiulo};
             Cursor c = db.query(LivroContrato.LivroEntry.TABLE_NAME, null, selection, whereArgs, null, null, null, null);
@@ -155,7 +155,7 @@ public class BancoHelper extends SQLiteOpenHelper {
             if (c.moveToFirst()){
                 Livro l = new Livro();
 
-                // recupera os atributos de carro
+
                 l.setId(c.getInt(c.getColumnIndex(LivroContrato.LivroEntry._ID)));
                 l.setTitulo(c.getString(c.getColumnIndex(LivroContrato.LivroEntry.TITULO)));
                 l.setAutor(c.getString(c.getColumnIndex(LivroContrato.LivroEntry.AUTOR)));
